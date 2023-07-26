@@ -13,6 +13,9 @@ import { useState } from "react";
 
 import { api } from "../../services/api"
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export function SignUp() {
     const [name, setName] = useState("")
@@ -53,7 +56,7 @@ export function SignUp() {
     return (
         <Container>
             <Header/>
-
+            <ToastContainer autoClose={2000} theme="dark"/>
             <LoginForm>
                 <legend> Crie sua conta </legend>
                 <div onKeyDown={(e) => handleKeyPress(e)}> 

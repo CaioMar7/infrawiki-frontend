@@ -6,7 +6,10 @@ export const Container = styled.div`
     width: 100%;
     
     > main {
-        padding: clamp(.1rem, 0%, 5rem) clamp(10rem, 80%, 10rem);
+        margin: 0 auto;
+
+
+        max-width: 150rem;
 
         gap: clamp(.1rem, 10%, 2rem);
         display: flex;
@@ -41,7 +44,7 @@ export const ButtonList = styled.div`
     width: 10rem;
     height: 100%;
 
-    margin-top: 3rem;
+    padding-top: 4rem;
 
     display: flex;
     flex-direction: column;
@@ -57,13 +60,15 @@ export const ButtonList = styled.div`
     @media screen and (max-width: 820px) {
         width: 100%;
 
+        padding-top: 1rem;
+
         display: flex;
         flex-direction: row;
 
         justify-content: space-between;
         align-items: center;
 
-        margin-top: 0rem;
+        margin-top: 2rem;
         margin-bottom: 1rem;
 
         button {
@@ -143,6 +148,8 @@ export const PostsList = styled.ul`
 
     overflow-y: auto;
     overflow-x: hidden;
+
+    position: relative;
 
     > li {
         width: 100%;
@@ -236,5 +243,24 @@ export const PostsList = styled.ul`
             }
         }
         
+        button {
+            background-color: transparent;
+            outline: none;
+            border: none;
+
+            color: ${({theme}) => theme.COLORS.GREEN};
+
+            height: 5rem;
+            width: 5rem;
+
+            font-size: 2rem;
+
+            z-index: 999;
+        }
+
+        button:hover{
+            font-weight: 700;
+            cursor: pointer;
+        }
     }
 `

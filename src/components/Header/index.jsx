@@ -17,6 +17,7 @@ export function Header() {
     function toggleMobileMenu() {
         if(menuMobileIsVisible) {
             setMenuMobileIsVisible(false)
+            
         } else {
             setMenuMobileIsVisible(true)
         }
@@ -25,7 +26,8 @@ export function Header() {
     function closeMobileMenu() {
         if(menuMobileIsVisible) {
             setMenuMobileIsVisible(false)
-        }
+            document.removeEventListener("click", handleClickOutside)
+        }   
     }
 
     const refMenuOutside = useRef(null)
@@ -37,7 +39,10 @@ export function Header() {
     }
 
     useEffect(() => {
-            document.addEventListener("click", handleClickOutside, true)
+            if(menuMobileIsVisible){
+                document.addEventListener("click", handleClickOutside, true)
+            } 
+            document.removeEventListener("click", handleClickOutside)
     }, [menuMobileIsVisible])
 
     useEffect(() => {

@@ -15,8 +15,13 @@ import { api } from "../../services/api";
 
 import { useNavigate } from "react-router-dom";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export function Dashboard() {
     const { user } = useAuth()
+
+    const timeNotification = 1000
 
     const navigate = useNavigate()
 
@@ -28,6 +33,24 @@ export function Dashboard() {
 
     async function handleViewPost(id) {
         navigate(`/posts/${id}`)
+    }
+
+    async function handleDeletePost(id) {
+        if (confirm("Você tem certeza que deseja excluir a postagem?")){
+            api.delete(`/posts/${id}`)
+            .then( () => {
+                let postsAfterDeleted = posts.filter(post => post.id != id)
+                setPosts(postsAfterDeleted)
+                return toast.success("Postagem removida com sucesso!")
+            })
+            .catch(error => {
+                if(error.response) {
+                    return toast.error(error.response.data.message)
+                } else {
+                    return toast.error("Não foi possivel remover a postagem!")
+                }
+            })
+        }
     }
 
     useEffect( () => {
@@ -50,7 +73,6 @@ export function Dashboard() {
         fetchPosts()
     }, [postsVisibility, postsSearch])
 
-    console.log(posts)
     return (
         <Container>
             <Header/>
@@ -78,13 +100,14 @@ export function Dashboard() {
                         {
                             posts.map( post => (
                                 
-                            <li key={String(post.id)} onClick={() => handleViewPost(post.id)}>
-                                <div>
+                            <li key={String(post.id)}>
+                                <div onClick={() => handleViewPost(post.id)}>
                                     <img src={post.thumbnail}/>
                                 </div>
-                                <div>
+                                <div onClick={() => handleViewPost(post.id)}>
                                     <h1> {post.title} </h1>
-                                    <p> {post.description}  </p>
+                                    <p> {post.description}  
+                                    </p>
                                     <span> 
                                         { post.locked == 1
                                         ? 
@@ -99,9 +122,9 @@ export function Dashboard() {
                                         </>}
                                     </span>
                                 </div>
+                                { user &&
+                                user.id == post.user_id ? <button onClick={() => handleDeletePost(post.id)}> x </button> : ""}
                             </li>
-
-
                             ))
                         }
                     </PostsList>
