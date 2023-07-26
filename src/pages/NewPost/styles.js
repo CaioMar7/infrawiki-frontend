@@ -174,7 +174,7 @@ export const NewPostForm = styled.form`
 
         gap: 3rem;
 
-        margin-top: 1rem;
+        margin-top: 2rem;
 
         height: clamp(5rem, 100%, 6rem);
 
@@ -184,6 +184,7 @@ export const NewPostForm = styled.form`
             justify-content: center;
             align-items: center;
             gap: 1rem;
+            padding-bottom: 5rem;
         }
 
         > div:nth-child(1) {
